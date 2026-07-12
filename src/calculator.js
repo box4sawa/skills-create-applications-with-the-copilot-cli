@@ -8,6 +8,9 @@
  * - Subtraction (-)
  * - Multiplication (*)
  * - Division (/)
+ * - Modulo (%)
+ * - Exponentiation (**)
+ * - Square Root (sqrt)
  */
 
 class Calculator {
@@ -54,6 +57,43 @@ class Calculator {
     }
     return a / b;
   }
+
+  /**
+   * Modulo operation
+   * @param {number} a - Dividend
+   * @param {number} b - Divisor
+   * @returns {number} Remainder of a divided by b
+   * @throws {Error} If divisor is zero
+   */
+  modulo(a, b) {
+    if (b === 0) {
+      throw new Error('Error: Modulo by zero is not allowed');
+    }
+    return a % b;
+  }
+
+  /**
+   * Exponentiation operation
+   * @param {number} a - Base
+   * @param {number} b - Exponent
+   * @returns {number} a raised to the power of b
+   */
+  exponentiate(a, b) {
+    return Math.pow(a, b);
+  }
+
+  /**
+   * Square root operation
+   * @param {number} a - Number to find the square root of
+   * @returns {number} Square root of a
+   * @throws {Error} If the number is negative
+   */
+  sqrt(a) {
+    if (a < 0) {
+      throw new Error('Error: Square root of a negative number is not allowed');
+    }
+    return Math.sqrt(a);
+  }
 }
 
 module.exports = Calculator;
@@ -66,55 +106,80 @@ if (require.main === module) {
   // Parse command-line arguments
   const args = process.argv.slice(2);
 
-  if (args.length < 3) {
+  if (args.length < 2) {
     console.log('Usage: calculator.js <number1> <operation> <number2>');
+    console.log('       calculator.js <number1> sqrt');
     console.log('');
     console.log('Operations:');
-    console.log('  +  Addition');
-    console.log('  -  Subtraction');
-    console.log('  *  Multiplication');
-    console.log('  /  Division');
+    console.log('  +     Addition');
+    console.log('  -     Subtraction');
+    console.log('  *     Multiplication');
+    console.log('  /     Division');
+    console.log('  %     Modulo');
+    console.log('  **    Exponentiation');
+    console.log('  sqrt  Square Root (single argument)');
     console.log('');
     console.log('Examples:');
     console.log('  calculator.js 10 + 5');
     console.log('  calculator.js 20 - 8');
     console.log('  calculator.js 4 * 3');
     console.log('  calculator.js 15 / 3');
+    console.log('  calculator.js 17 % 5');
+    console.log('  calculator.js 2 ** 8');
+    console.log('  calculator.js 16 sqrt');
     process.exit(1);
   }
 
   const num1 = parseFloat(args[0]);
   const operation = args[1];
-  const num2 = parseFloat(args[2]);
 
-  // Validate inputs
-  if (isNaN(num1) || isNaN(num2)) {
-    console.error('Error: Both inputs must be valid numbers');
+  // Validate first input
+  if (isNaN(num1)) {
+    console.error('Error: First input must be a valid number');
     process.exit(1);
   }
 
   let result;
 
   try {
-    switch (operation) {
-      case '+':
-        result = calculator.add(num1, num2);
-        break;
-      case '-':
-        result = calculator.subtract(num1, num2);
-        break;
-      case '*':
-        result = calculator.multiply(num1, num2);
-        break;
-      case '/':
-        result = calculator.divide(num1, num2);
-        break;
-      default:
-        console.error(`Error: Unknown operation '${operation}'. Supported operations are: +, -, *, /`);
+    if (operation === 'sqrt') {
+      result = calculator.sqrt(num1);
+      console.log(`sqrt(${num1}) = ${result}`);
+    } else {
+      if (args.length < 3) {
+        console.error(`Error: Operation '${operation}' requires two numbers`);
         process.exit(1);
+      }
+      const num2 = parseFloat(args[2]);
+      if (isNaN(num2)) {
+        console.error('Error: Second input must be a valid number');
+        process.exit(1);
+      }
+      switch (operation) {
+        case '+':
+          result = calculator.add(num1, num2);
+          break;
+        case '-':
+          result = calculator.subtract(num1, num2);
+          break;
+        case '*':
+          result = calculator.multiply(num1, num2);
+          break;
+        case '/':
+          result = calculator.divide(num1, num2);
+          break;
+        case '%':
+          result = calculator.modulo(num1, num2);
+          break;
+        case '**':
+          result = calculator.exponentiate(num1, num2);
+          break;
+        default:
+          console.error(`Error: Unknown operation '${operation}'. Supported operations are: +, -, *, /, %, **, sqrt`);
+          process.exit(1);
+      }
+      console.log(`${num1} ${operation} ${num2} = ${result}`);
     }
-
-    console.log(`${num1} ${operation} ${num2} = ${result}`);
   } catch (error) {
     console.error(error.message);
     process.exit(1);

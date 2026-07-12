@@ -143,6 +143,92 @@ describe('Calculator', () => {
     });
   });
 
+  describe('Modulo', () => {
+    test('should return remainder of two positive numbers', () => {
+      expect(calculator.modulo(17, 5)).toBe(2);
+    });
+
+    test('should return zero when divisible evenly', () => {
+      expect(calculator.modulo(10, 2)).toBe(0);
+    });
+
+    test('should handle negative dividend', () => {
+      expect(calculator.modulo(-7, 3)).toBe(-1);
+    });
+
+    test('should handle negative divisor', () => {
+      expect(calculator.modulo(7, -3)).toBe(1);
+    });
+
+    test('should handle decimal numbers', () => {
+      expect(calculator.modulo(5.5, 2)).toBeCloseTo(1.5);
+    });
+
+    test('should throw error when divisor is zero', () => {
+      expect(() => calculator.modulo(10, 0)).toThrow('Error: Modulo by zero is not allowed');
+    });
+
+    test('should throw error when both arguments are zero', () => {
+      expect(() => calculator.modulo(0, 0)).toThrow('Error: Modulo by zero is not allowed');
+    });
+  });
+
+  describe('Exponentiation', () => {
+    test('should raise a number to a positive power', () => {
+      expect(calculator.exponentiate(2, 8)).toBe(256);
+    });
+
+    test('should return 1 when exponent is zero', () => {
+      expect(calculator.exponentiate(5, 0)).toBe(1);
+    });
+
+    test('should return the base when exponent is one', () => {
+      expect(calculator.exponentiate(7, 1)).toBe(7);
+    });
+
+    test('should handle negative exponent', () => {
+      expect(calculator.exponentiate(2, -2)).toBe(0.25);
+    });
+
+    test('should handle fractional exponent', () => {
+      expect(calculator.exponentiate(4, 0.5)).toBe(2);
+    });
+
+    test('should return 0 when base is zero', () => {
+      expect(calculator.exponentiate(0, 5)).toBe(0);
+    });
+
+    test('should handle negative base with even exponent', () => {
+      expect(calculator.exponentiate(-3, 2)).toBe(9);
+    });
+  });
+
+  describe('Square Root', () => {
+    test('should return square root of a perfect square', () => {
+      expect(calculator.sqrt(16)).toBe(4);
+    });
+
+    test('should return square root of zero', () => {
+      expect(calculator.sqrt(0)).toBe(0);
+    });
+
+    test('should return square root of a non-perfect square', () => {
+      expect(calculator.sqrt(2)).toBeCloseTo(1.41421, 5);
+    });
+
+    test('should return square root of a decimal number', () => {
+      expect(calculator.sqrt(0.25)).toBe(0.5);
+    });
+
+    test('should throw error for negative number', () => {
+      expect(() => calculator.sqrt(-1)).toThrow('Error: Square root of a negative number is not allowed');
+    });
+
+    test('should throw error for any negative number', () => {
+      expect(() => calculator.sqrt(-100)).toThrow('Error: Square root of a negative number is not allowed');
+    });
+  });
+
   describe('Image Examples - calc-basic-operations.png', () => {
     test('should calculate 2 + 3 = 5', () => {
       expect(calculator.add(2, 3)).toBe(5);
