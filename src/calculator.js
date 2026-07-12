@@ -8,6 +8,9 @@
  * - Subtraction (-)
  * - Multiplication (*)
  * - Division (/)
+ * - Modulo (%)
+ * - Exponentiation (power)
+ * - Square root
  */
 
 class Calculator {
@@ -53,6 +56,39 @@ class Calculator {
       throw new Error('Error: Division by zero is not allowed');
     }
     return a / b;
+  }
+
+  /**
+   * Modulo operation
+   * @param {number} a - Dividend
+   * @param {number} b - Divisor
+   * @returns {number} Remainder of a divided by b
+   */
+  modulo(a, b) {
+    return a % b;
+  }
+
+  /**
+   * Exponentiation operation
+   * @param {number} base - Base number
+   * @param {number} exponent - Exponent value
+   * @returns {number} Base raised to the exponent
+   */
+  power(base, exponent) {
+    return base ** exponent;
+  }
+
+  /**
+   * Square root operation
+   * @param {number} n - Number to calculate the square root of
+   * @returns {number} Square root of n
+   * @throws {Error} If n is negative
+   */
+  squareRoot(n) {
+    if (n < 0) {
+      throw new Error('Error: Square root of a negative number is not allowed');
+    }
+    return Math.sqrt(n);
   }
 }
 

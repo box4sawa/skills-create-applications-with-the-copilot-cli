@@ -143,6 +143,64 @@ describe('Calculator', () => {
     });
   });
 
+  describe('Modulo', () => {
+    test('should return the remainder of division', () => {
+      expect(calculator.modulo(10, 3)).toBe(1);
+    });
+
+    test('should return zero when the dividend is evenly divisible', () => {
+      expect(calculator.modulo(12, 4)).toBe(0);
+    });
+
+    test('should handle negative dividends', () => {
+      expect(calculator.modulo(-10, 3)).toBe(-1);
+    });
+  });
+
+  describe('Power', () => {
+    test('should raise a base to a positive exponent', () => {
+      expect(calculator.power(2, 3)).toBe(8);
+    });
+
+    test('should raise a base to a zero exponent', () => {
+      expect(calculator.power(5, 0)).toBe(1);
+    });
+
+    test('should support negative exponents', () => {
+      expect(calculator.power(2, -2)).toBe(0.25);
+    });
+  });
+
+  describe('Square Root', () => {
+    test('should return the square root of a positive number', () => {
+      expect(calculator.squareRoot(81)).toBe(9);
+    });
+
+    test('should return zero for zero', () => {
+      expect(calculator.squareRoot(0)).toBe(0);
+    });
+
+    test('should throw an error for a negative number', () => {
+      expect(() => calculator.squareRoot(-1)).toThrow(
+        'Error: Square root of a negative number is not allowed'
+      );
+    });
+  });
+
+  describe('Image Examples - calc-extended-operations.png', () => {
+    test('should calculate 5 % 2 = 1', () => {
+      expect(calculator.modulo(5, 2)).toBe(1);
+    });
+
+    test('should calculate 2 ^ 3 = 8', () => {
+      expect(calculator.power(2, 3)).toBe(8);
+    });
+
+    test('should calculate the square root of 16 = 4', () => {
+      expect(calculator.squareRoot(16)).toBe(4);
+    });
+  });
+
   describe('Image Examples - calc-basic-operations.png', () => {
     test('should calculate 2 + 3 = 5', () => {
       expect(calculator.add(2, 3)).toBe(5);
